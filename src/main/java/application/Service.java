@@ -26,7 +26,8 @@ public class Service {
             stmt = conn.createStatement();
             ResultSet rs=stmt.executeQuery(quary);
             while (rs.next()){
-                Order ore= new Order();
+                Order ore= new Order(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getInt(4),rs.getDouble(5));
+                or.add(ore);
             }
 
         } catch (SQLException e) {
@@ -53,8 +54,16 @@ public class Service {
     }
 
     public int removeProduct(int pid) {
+        int n=0;
         String quary="delete from product_info where pid=?";
-        return 0;
+        try {
+            PreparedStatement pstrmt= conn.prepareStatement(quary);
+            pstrmt.setInt(1,pid);
+            n=pstrmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return n;
     }
 
     public int placeProduct(String cNmae, int pId, int pQty) {
@@ -69,5 +78,22 @@ public class Service {
             System.out.println(e);
         }
         return 1;
+    }
+
+    public int updateProduct(Product p4U) {
+        String quary= "update product_info set pid=?,pname=?,pqty=?,pro_price=? where pid=?" ;
+        int n=0;
+        try {
+            PreparedStatement pstmt= conn.prepareStatement(quary);
+            pstmt.setInt(1,p4U.getpId());
+            pstmt.setString(2,p4U.getpName());
+            pstmt.setInt(3,p4U.getpQty());
+            pstmt.setDouble(4,p4U.getPrice());
+            pstmt.setInt(5,p4U.getpId());
+           n= pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return n;
     }
 }

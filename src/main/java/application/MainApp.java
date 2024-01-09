@@ -24,7 +24,16 @@ public class MainApp {
                 int n=ser.removeProduct(pid);
                 break;
             case 3:
-                System.out.println("======");
+                System.out.println("enter product id ");
+                int cpid= sc.nextInt();
+                System.out.println("enter updated name ");
+                String nameU=sc.next();
+                System.out.println("enter pQty");
+                int pQty=sc.nextInt();
+                System.out.println("enter price to update ");
+                double price =sc.nextDouble();
+                updateProduct(cpid,nameU,pQty,price);
+
                 break;
             case 4:
                 System.out.println("enter ypur mane ");
@@ -32,18 +41,29 @@ public class MainApp {
                 System.out.println("enter product id ");
                 int pId= sc.nextInt();
                 System.out.println("enter product qty");
-                int pQty= sc.nextInt();
-                placeOrder(cNmae,pId,pQty);
+                int pQtyy= sc.nextInt();
+                placeOrder(cNmae,pId,pQtyy);
                 break;
             case 5:
                 displayAllOrder();
+                break;
+            case 6:
+                System.exit(0);
+            default:
+                System.out.println("inavald input");
         }
         main(args);
     }
 
+    private static void updateProduct(int cpid, String nameU, int pQty, double price) {
+        Product p4U=new Product(cpid,nameU,pQty,price);
+        int n= ser.updateProduct(p4U);
+    }
+
+
     private static void displayAllOrder() {
         for(Order or:ser.viwOder()){
-
+            System.out.println(or.getOid()+" "+or.getCusNam()+" "+or.getPid()+" "+or.getProQty()+" "+or.getTaatal());
         }
     }
 
